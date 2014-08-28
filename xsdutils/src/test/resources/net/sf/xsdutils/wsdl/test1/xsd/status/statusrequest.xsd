@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/status/request" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/status/request" xmlns:common="http://my-site/testservice/common">
+	<xs:import namespace="http://my-site/testservice/common" schemaLocation="../common.xsd"/>
+	<xs:element name="statusRequest" type="statusRequestType"/>
+	<xs:complexType name="statusResponseOptionsType">
+		<xs:sequence>
+			<xs:element name="fetchAllAnswers" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="includeAllCategories" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="matchOnKeyword" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="maxResponseQuestions" type="common:maxResponseQuestionsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusRequestOptionsType">
+		<xs:sequence>
+			<xs:element name="log" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="testMode" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusRequestType">
+		<xs:sequence>
+			<xs:element name="context" type="common:contextType"/>
+			<xs:element name="statusRequestOptions" type="statusRequestOptionsType" minOccurs="0"/>
+			<xs:element name="statusParameters" type="statusParametersType"/>
+			<xs:element name="statusResponseOptions" type="statusResponseOptionsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusParametersType">
+		<xs:sequence>
+			<xs:element name="handle" type="xs:string" minOccurs="0"/>
+			<xs:element name="question" type="questionType"/>
+			<xs:element name="category" type="common:categoryReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="matchType" type="matchTypeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="questionType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="matchTypeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

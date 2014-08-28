@@ -1,0 +1,18 @@
+<project>
+	<build>
+		<plugins>
+			<plugin attr1="a" attr2="b" attrC="c">
+				<artifactId>maven-wsdlmerge-plugin</artifactId>
+<!--
+ comment 
+ -->
+				<configuration>
+&gt;
+					<wsdlDirectory>${basedir}/target/test-classes/test1</wsdlDirectory>
+					<targetDirectory>${basedir}/target/test-classes/test1</targetDirectory>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

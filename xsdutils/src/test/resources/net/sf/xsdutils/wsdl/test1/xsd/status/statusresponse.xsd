@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/status/response" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/status/response" xmlns:common="http://my-site/testservice/common">
+	<xs:import namespace="http://my-site/testservice/common" schemaLocation="../common.xsd"/>
+	<xs:element name="statusResponse" type="statusResponseType"/>
+	<xs:complexType name="keywordResponseType">
+		<xs:sequence>
+			<xs:element name="handle" type="xs:string"/>
+			<xs:element name="keywordAction" type="common:keywordActionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="category" type="common:categoryReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusResponseType">
+		<xs:choice>
+			<xs:element name="questionResponse" type="common:questionResponseType"/>
+			<xs:element name="errorResponse" type="common:errorResponseType"/>
+			<xs:element name="keywordResponse" type="keywordResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

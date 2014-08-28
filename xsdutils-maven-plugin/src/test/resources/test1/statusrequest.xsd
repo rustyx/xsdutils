@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/status/request" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/status/request" xmlns:common="http://my-site/testservice/common">
+	<xs:import namespace="http://my-site/testservice/common" schemaLocation="common.xsd"/>
+	<xs:element name="statusRequest" type="statusRequestType"/>
+	<xs:complexType name="statusRequestType">
+		<xs:sequence>
+			<xs:element name="context" type="common:contextType"/>
+			<xs:element name="testMode" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

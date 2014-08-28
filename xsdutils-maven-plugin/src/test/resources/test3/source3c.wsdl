@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://my-site/testservice" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+	<xi:include href="src/test/resources/test3/inc.xml"/>
+
+</wsdl:definitions>

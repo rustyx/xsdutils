@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice">
+	<wsdl:types>
+		
+	<xs:schema xmlns="http://my-site/testservice/common" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/common">
+	<xs:element name="contextType" type="contextType"/>
+	<xs:complexType name="contextType">
+		<xs:sequence>
+			<xs:element name="consumer" type="xs:string"/>
+			<xs:element name="languageCode" type="xs:string"/>
+			<xs:element minOccurs="0" name="siteCodeType" type="siteCodeType"/>
+			<xs:element minOccurs="0" name="referrerType" type="referrerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="siteCodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="categoryReferenceType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="questionResponseType" type="questionResponseType"/>
+	<xs:complexType name="questionResponseType">
+		<xs:sequence>
+			<xs:element name="handle" type="xs:string"/>
+			<xs:element name="representation" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="question" type="questionType"/>
+			<xs:element minOccurs="0" name="topCategory" type="categoryReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="questionType" type="questionType"/>
+	<xs:complexType name="questionType">
+		<xs:sequence>
+			<xs:element name="matchType" type="xs:string"/>
+			<xs:element name="order" type="xs:int"/>
+			<xs:element name="representation" type="xs:string"/>
+			<xs:element name="score" type="xs:int"/>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" name="answer" type="questionAnswerType"/>
+			<xs:element maxOccurs="unbounded" name="category" type="categoryReferenceType"/>
+			<xs:element name="questionId" type="questionReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="keywordActionType" type="keywordActionType"/>
+	<xs:complexType name="keywordActionType">
+		<xs:sequence>
+			<xs:element name="keywordActionId" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="orderId" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="referrerType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="errorResponseType" type="errorResponseType"/>
+	<xs:complexType name="errorResponseType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="error" type="errorType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="errorType" type="errorType"/>
+	<xs:complexType name="errorType">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string"/>
+			<xs:element name="errorId" type="xs:string"/>
+			<xs:element name="source" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="questionAnswerType" type="questionAnswerType"/>
+	<xs:complexType name="questionAnswerType">
+		<xs:complexContent>
+			<xs:extension base="answerType">
+				<xs:sequence>
+					<xs:element name="answerId" type="xs:string"/>
+					<xs:element name="order" type="xs:int"/>
+					<xs:element name="selected" type="xs:boolean"/>
+					<xs:element name="title" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="answerPropertyType" type="answerPropertyType"/>
+	<xs:complexType name="answerPropertyType">
+		<xs:sequence/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:element name="generalQuestionResponseType" type="generalQuestionResponseType"/>
+	<xs:complexType name="generalQuestionResponseType">
+		<xs:choice>
+			<xs:element name="errorResponse" type="errorResponseType"/>
+			<xs:element name="questionResponse" type="questionResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="categoryType" type="categoryType"/>
+	<xs:complexType name="categoryType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="isLeaf" type="xs:boolean"/>
+			<xs:element name="level" type="xs:int"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element minOccurs="0" name="showInBrowser" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="showInFAQ" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="showInReports" type="xs:boolean"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="childCategory" type="categoryType"/>
+			<xs:element name="id" type="categoryReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="answerType" type="answerType"/>
+	<xs:complexType name="answerType">
+		<xs:sequence>
+			<xs:element name="answerType" type="xs:string"/>
+			<xs:element name="answerValue" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="entity" type="entityType"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="property" type="answerPropertyType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="clickTypeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="entityType" type="entityType"/>
+	<xs:complexType name="entityType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="definition" type="xs:string"/>
+			<xs:element name="definitionId" type="xs:string"/>
+			<xs:element name="item" type="xs:string"/>
+			<xs:element name="itemId" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="maxResponseQuestionsType">
+		<xs:restriction base="xs:int">
+			<xs:maxInclusive value="20"/>
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="questionReferenceType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="externalObjectTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="avatar"/>
+			<xs:enumeration value="banner"/>
+			<xs:enumeration value="picture"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="notificationResponseType" type="notificationResponseType"/>
+	<xs:complexType name="notificationResponseType">
+		<xs:choice>
+			<xs:element name="successResponse" type="successResponseType"/>
+			<xs:element name="errorResponse" type="errorResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="successResponseType" type="successResponseType"/>
+	<xs:complexType name="successResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+</xs:schema>
+<xs:schema xmlns="http://my-site/testservice/status/request" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/status/request">
+	<xs:import namespace="http://my-site/testservice/common"/>
+	<xs:element name="statusRequest" type="statusRequestType"/>
+	<xs:complexType name="statusResponseOptionsType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="fetchAllAnswers" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="includeAllCategories" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="matchOnKeyword" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="maxResponseQuestions" type="common:maxResponseQuestionsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusRequestOptionsType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="log" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="testMode" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusRequestType">
+		<xs:sequence>
+			<xs:element name="context" type="common:contextType"/>
+			<xs:element minOccurs="0" name="statusRequestOptions" type="statusRequestOptionsType"/>
+			<xs:element name="statusParameters" type="statusParametersType"/>
+			<xs:element minOccurs="0" name="statusResponseOptions" type="statusResponseOptionsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusParametersType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="handle" type="xs:string"/>
+			<xs:element name="question" type="questionType"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="category" type="common:categoryReferenceType"/>
+			<xs:element minOccurs="0" name="matchType" type="matchTypeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="questionType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="128"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="matchTypeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns="http://my-site/testservice/status/response" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/status/response">
+	<xs:import namespace="http://my-site/testservice/common"/>
+	<xs:element name="statusResponse" type="statusResponseType"/>
+	<xs:complexType name="keywordResponseType">
+		<xs:sequence>
+			<xs:element name="handle" type="xs:string"/>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="keywordAction" type="common:keywordActionType"/>
+			<xs:element name="category" type="common:categoryReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="statusResponseType">
+		<xs:choice>
+			<xs:element name="questionResponse" type="common:questionResponseType"/>
+			<xs:element name="errorResponse" type="common:errorResponseType"/>
+			<xs:element name="keywordResponse" type="keywordResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
+</wsdl:types>
+	<message xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:statusrequest="http://my-site/testservice/status/request" name="StatusRequest">
+		<part element="statusrequest:statusRequest" name="StatusRequest"/>
+	</message>
+	<message xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:statusresponse="http://my-site/testservice/status/response" name="StatusResponse">
+		<part element="statusresponse:statusResponse" name="StatusResponse"/>
+	</message>
+	<portType xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="test">
+		<operation name="status">
+			<input message="curr:StatusRequest" name="statusRequest"/>
+			<output message="curr:StatusResponse" name="statusResponse"/>
+		</operation>
+	</portType>
+	<binding xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="testSOAPBinding" type="curr:test">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="status">
+			<wsdlsoap:operation soapAction="status" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="test">
+		<port binding="curr:testSOAPBinding" name="test">
+			<address xmlns="http://schemas.xmlsoap.org/wsdl/soap/" location="http://localhost/test"/>
+		</port>
+	</service>
+</wsdl:definitions>

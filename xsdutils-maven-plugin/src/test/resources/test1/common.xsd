@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/common" xmlns:common="http://my-site/testservice/common">
+	<xs:element name="contextType" type="contextType"/>
+	<xs:complexType name="contextType">
+		<xs:sequence>
+			<xs:element name="url" type="xs:string"/>
+			<xs:element name="siteIdType" type="siteIdType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="siteIdType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

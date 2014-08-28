@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/status/response" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/status/response" xmlns:common="http://my-site/testservice/common">
+	<xs:import namespace="http://my-site/testservice/common" schemaLocation="common.xsd"/>
+	<xs:element name="statusResponse" type="statusResponseType"/>
+	<xs:complexType name="statusResponseType">
+		<xs:choice>
+			<xs:element name="statusMessage" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

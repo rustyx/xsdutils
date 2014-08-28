@@ -1,0 +1,14 @@
+<project>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>xsdutils-maven-plugin</artifactId>
+				<configuration>
+					<wsdlDirectory>${basedir}/target/test-classes/test2</wsdlDirectory>
+					<wsdls><wsdl>source.wsdl</wsdl></wsdls>
+					<targetDirectory>${basedir}/target/test-classes/test2/merged</targetDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

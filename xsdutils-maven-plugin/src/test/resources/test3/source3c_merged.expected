@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice">
+	<included xml:base="src/test/resources/test3/inc.xml">
+		data
+	</included>
+</wsdl:definitions>

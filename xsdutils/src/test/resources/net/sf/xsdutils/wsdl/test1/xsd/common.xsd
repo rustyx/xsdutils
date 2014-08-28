@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://my-site/testservice/common" xmlns:common="http://my-site/testservice/common">
+	<xs:element name="contextType" type="contextType"/>
+	<xs:complexType name="contextType">
+		<xs:sequence>
+			<xs:element name="consumer" type="xs:string"/>
+			<xs:element name="languageCode" type="xs:string"/>
+			<xs:element name="siteCodeType" type="siteCodeType" minOccurs="0"/>
+			<xs:element name="referrerType" type="referrerType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="siteCodeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="categoryReferenceType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="questionResponseType" type="questionResponseType"/>
+	<xs:complexType name="questionResponseType">
+		<xs:sequence>
+			<xs:element name="handle" type="xs:string"/>
+			<xs:element name="representation" type="xs:string"/>
+			<xs:element name="question" type="questionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="topCategory" type="categoryReferenceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="questionType" type="questionType"/>
+	<xs:complexType name="questionType">
+		<xs:sequence>
+			<xs:element name="matchType" type="xs:string"/>
+			<xs:element name="order" type="xs:int"/>
+			<xs:element name="representation" type="xs:string"/>
+			<xs:element name="score" type="xs:int"/>
+			<xs:element name="type" type="xs:string"/>
+			<xs:element name="answer" type="questionAnswerType" maxOccurs="unbounded"/>
+			<xs:element name="category" type="categoryReferenceType" maxOccurs="unbounded"/>
+			<xs:element name="questionId" type="questionReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="keywordActionType" type="keywordActionType"/>
+	<xs:complexType name="keywordActionType">
+		<xs:sequence>
+			<xs:element name="keywordActionId" type="xs:string"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="orderId" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="referrerType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="errorResponseType" type="errorResponseType"/>
+	<xs:complexType name="errorResponseType">
+		<xs:sequence>
+			<xs:element name="error" type="errorType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="errorType" type="errorType"/>
+	<xs:complexType name="errorType">
+		<xs:sequence>
+			<xs:element name="description" type="xs:string"/>
+			<xs:element name="errorId" type="xs:string"/>
+			<xs:element name="source" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="questionAnswerType" type="questionAnswerType"/>
+	<xs:complexType name="questionAnswerType">
+		<xs:complexContent>
+			<xs:extension base="answerType">
+				<xs:sequence>
+					<xs:element name="answerId" type="xs:string"/>
+					<xs:element name="order" type="xs:int"/>
+					<xs:element name="selected" type="xs:boolean"/>
+					<xs:element name="title" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="answerPropertyType" type="answerPropertyType"/>
+	<xs:complexType name="answerPropertyType">
+		<xs:sequence/>
+		<xs:attribute name="name" use="required" type="xs:string"/>
+		<xs:attribute name="value" use="required" type="xs:string"/>
+	</xs:complexType>
+	<xs:element name="generalQuestionResponseType" type="generalQuestionResponseType"/>
+	<xs:complexType name="generalQuestionResponseType">
+		<xs:choice>
+			<xs:element name="errorResponse" type="errorResponseType"/>
+			<xs:element name="questionResponse" type="questionResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="categoryType" type="categoryType"/>
+	<xs:complexType name="categoryType">
+		<xs:sequence>
+			<xs:element name="isLeaf" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="level" type="xs:int"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="showInBrowser" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="showInFAQ" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="showInReports" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="childCategory" type="categoryType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="id" type="categoryReferenceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="answerType" type="answerType"/>
+	<xs:complexType name="answerType">
+		<xs:sequence>
+			<xs:element name="answerType" type="xs:string"/>
+			<xs:element name="answerValue" type="xs:string"/>
+			<xs:element name="entity" type="entityType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="property" type="answerPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="clickTypeType">
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="entityType" type="entityType"/>
+	<xs:complexType name="entityType">
+		<xs:sequence>
+			<xs:element name="definition" type="xs:string" minOccurs="0"/>
+			<xs:element name="definitionId" type="xs:string"/>
+			<xs:element name="item" type="xs:string"/>
+			<xs:element name="itemId" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="maxResponseQuestionsType">
+		<xs:restriction base="xs:int">
+			<xs:maxInclusive value="20"/>
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="questionReferenceType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="externalObjectTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="avatar"/>
+			<xs:enumeration value="banner"/>
+			<xs:enumeration value="picture"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="notificationResponseType" type="notificationResponseType"/>
+	<xs:complexType name="notificationResponseType">
+		<xs:choice>
+			<xs:element name="successResponse" type="successResponseType"/>
+			<xs:element name="errorResponse" type="errorResponseType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="successResponseType" type="successResponseType"/>
+	<xs:complexType name="successResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+</xs:schema>

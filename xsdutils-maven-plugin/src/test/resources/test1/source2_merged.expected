@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice">
+	<wsdl:types>
+		
+	<xs:schema xmlns="http://my-site/testservice/common" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/common">
+	<xs:element name="contextType" type="contextType"/>
+	<xs:complexType name="contextType">
+		<xs:sequence>
+			<xs:element name="url" type="xs:string"/>
+			<xs:element minOccurs="0" name="siteIdType" type="siteIdType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="siteIdType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns="http://my-site/testservice/status/request" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/status/request">
+	<xs:import namespace="http://my-site/testservice/common"/>
+	<xs:element name="statusRequest" type="statusRequestType"/>
+	<xs:complexType name="statusRequestType">
+		<xs:sequence>
+			<xs:element name="context" type="common:contextType"/>
+			<xs:element minOccurs="0" name="testMode" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
+<xs:schema xmlns="http://my-site/testservice/status/response" xmlns:common="http://my-site/testservice/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice/status/response">
+	<xs:import namespace="http://my-site/testservice/common"/>
+	<xs:element name="statusResponse" type="statusResponseType"/>
+	<xs:complexType name="statusResponseType">
+		<xs:choice>
+			<xs:element name="statusMessage" type="xs:string"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
+</wsdl:types>
+	<message xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:statusrequest="http://my-site/testservice/status/request" name="StatusRequest">
+		<part element="statusrequest:statusRequest" name="StatusRequest"/>
+	</message>
+	<message xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:statusresponse="http://my-site/testservice/status/response" name="StatusResponse">
+		<part element="statusresponse:statusResponse" name="StatusResponse"/>
+	</message>
+	<portType xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="test">
+		<operation name="status">
+			<input message="curr:StatusRequest" name="statusRequest"/>
+			<output message="curr:StatusResponse" name="statusResponse"/>
+		</operation>
+	</portType>
+	<binding xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="testSOAPBinding" type="curr:test">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="status">
+			<wsdlsoap:operation soapAction="status" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:curr="http://my-site/testservice" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="test">
+		<port binding="curr:testSOAPBinding" name="test">
+			<address xmlns="http://schemas.xmlsoap.org/wsdl/soap/" location="http://localhost/test"/>
+		</port>
+	</service>
+</wsdl:definitions>

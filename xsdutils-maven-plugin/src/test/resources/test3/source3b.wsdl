@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdlhttp="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://my-site/testservice">
+	<wsdl:types>
+	</wsdl:types>
+	<message name="StatusRequest" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+		<part name="StatusRequest" element="xs:string"/>
+	</message>
+	<message name="StatusResponse" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+		<part name="StatusResponse" element="xs:string"/>
+	</message>
+	<portType name="test" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:curr="http://my-site/testservice">
+		<operation name="status">
+			<input name="statusRequest" message="curr:StatusRequest"/>
+			<output name="statusResponse" message="curr:StatusResponse"/>
+		</operation>
+	</portType>
+	<binding name="testSOAPBinding" type="curr:test" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:curr="http://my-site/testservice">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="status">
+			<wsdlsoap:operation soapAction="status" style="document"/>
+			<input>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="test" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:curr="http://my-site/testservice">
+		<port name="test" binding="curr:testSOAPBinding">
+			<address location="http://localhost/test" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+		</port>
+	</service>
+</wsdl:definitions>
